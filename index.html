@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Nails Castle — Beauty Studio, GTA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            castle: '#f5ede3',
+            'castle-2': '#ece0d4',
+            'castle-3': '#e0d0c0',
+            gold: '#c9a227',
+            'gold-light': '#e8c860',
+            'gold-dark': '#9a7820',
+            ink: '#1c1410',
+            muted: '#7a6a5e',
+          },
+          fontFamily: {
+            brand: ['"Cinzel"', 'serif'],
+            heading: ['"Cormorant Garamond"', 'serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #f5ede3;
+      color: #1c1410;
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      font-weight: 300;
+    }
+
+    /* ─── GOLD TEXT ─── */
+    .gold-text {
+      background: linear-gradient(135deg, #9a7820 0%, #e8c860 40%, #c9a227 65%, #9a7820 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── NAV ─── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      padding: 1.25rem 2rem;
+      transition: background 0.5s ease, padding 0.4s ease, border-color 0.5s ease, box-shadow 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      background: rgba(245, 237, 227, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0.85rem 2rem;
+      border-bottom-color: rgba(201, 162, 39, 0.2);
+      box-shadow: 0 1px 20px rgba(28, 20, 16, 0.07);
+    }
+    .nav-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(28, 20, 16, 0.52);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+      font-weight: 400;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: #c9a227;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-link:hover { color: #c9a227; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ─── BUTTONS ─── */
+    .btn-gold {
+      display: inline-block;
+      background: linear-gradient(135deg, #c9a227 0%, #e8c860 50%, #c9a227 100%);
+      background-size: 200% auto;
+      color: #1c1410;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-position 0.4s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-gold:hover {
+      background-position: right center;
+      box-shadow: 0 8px 32px rgba(201, 162, 39, 0.45);
+      transform: translateY(-1px);
+    }
+    .btn-gold:active { transform: translateY(0); }
+
+    .btn-gold-outline {
+      display: inline-block;
+      border: 1px solid #c9a227;
+      color: #c9a227;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 400;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.35s ease;
+      cursor: pointer;
+      background: transparent;
+    }
+    .btn-gold-outline::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #c9a227, #e8c860);
+      transform: translateX(-101%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-gold-outline:hover::before { transform: translateX(0); }
+    .btn-gold-outline:hover { color: #1c1410; }
+    .btn-gold-outline span { position: relative; z-index: 1; }
+
+    /* ─── HERO ─── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 5%, rgba(232, 200, 96, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 90% 90%, rgba(201, 162, 39, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 50% at 50% 100%, rgba(236, 224, 212, 0.9) 0%, transparent 60%),
+        #f5ede3;
+    }
+
+    /* ─── ORNATE DIVIDER ─── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .ornament::before, .ornament::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c9a227);
+    }
+    .ornament::after {
+      background: linear-gradient(90deg, #c9a227, transparent);
+    }
+    .ornament-diamond {
+      width: 6px; height: 6px;
+      background: #c9a227;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .line-gold-center {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, #c9a227, transparent);
+      margin: 0 auto;
+    }
+    .line-gold-left {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg, #c9a227, transparent);
+    }
+    .line-thin {
+      width: 100%; height: 1px;
+      background: rgba(201, 162, 39, 0.18);
+    }
+
+    /* ─── SERVICE TABLE ─── */
+    .service-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(201, 162, 39, 0.12);
+      transition: background 0.2s ease;
+    }
+    .service-row:last-child { border-bottom: none; }
+    .service-row:hover { background: rgba(201, 162, 39, 0.04); margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
+
+    .service-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: #1c1410;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .service-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #c9a227;
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    .service-category {
+      background: linear-gradient(135deg, #ece0d4, #e8d8c8);
+      border: 1px solid rgba(201, 162, 39, 0.2);
+      padding: 2rem;
+      position: relative;
+    }
+    .service-category::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c9a227, transparent);
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery-item {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: brightness(1.02) contrast(1.1) saturate(1.15);
+      display: block;
+    }
+    /* Bottom gradient for label readability */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,20,16,0.72) 0%, rgba(28,20,16,0.1) 40%, transparent 65%);
+      z-index: 1;
+      transition: opacity 0.4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.07); }
+    .gallery-item:hover::after { opacity: 0.75; }
+
+    /* Hover caption label */
+    .gallery-label {
+      position: absolute;
+      bottom: 1rem; left: 1rem; right: 1rem;
+      z-index: 2;
+      opacity: 1;
+    }
+    .gallery-label span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245, 237, 227, 0.75);
+      font-weight: 400;
+    }
+    .gallery-label strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #f5ede3;
+      margin-top: 0.1rem;
+    }
+
+    /* About collage */
+    .about-collage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.5rem;
+      aspect-ratio: 4/5;
+    }
+    .about-collage-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .about-collage-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: brightness(1.0) contrast(1.08) saturate(1.12);
+    }
+    .about-collage-item:hover img { transform: scale(1.05); }
+
+    /* ─── REVIEW CARDS ─── */
+    .review-card {
+      background: #faf4ea;
+      border: 1px solid rgba(201, 162, 39, 0.18);
+      padding: 2.25rem 2rem;
+      position: relative;
+    }
+    .review-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      line-height: 1;
+      position: absolute;
+      top: -0.5rem; left: 1.5rem;
+      color: #c9a227;
+      opacity: 0.12;
+    }
+    .stars { color: #c9a227; letter-spacing: 2px; font-size: 0.8rem; }
+
+    /* ─── FORM ─── */
+    .form-field {
+      background: #faf4ea;
+      border: 1px solid rgba(201, 162, 39, 0.22);
+      color: #1c1410;
+      padding: 0.9rem 1.2rem;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-field::placeholder { color: rgba(28,20,16,0.3); }
+    .form-field:focus {
+      border-color: #c9a227;
+      box-shadow: 0 0 0 3px rgba(201,162,39,0.1);
+    }
+
+    /* ─── HAMBURGER ─── */
+    .ham-line {
+      display: block;
+      width: 22px; height: 1px;
+      background: #1c1410;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    #hamburger.open .ham-line:nth-child(1) { transform: rotate(45deg) translate(3px, 5px); }
+    #hamburger.open .ham-line:nth-child(2) { opacity: 0; }
+    #hamburger.open .ham-line:nth-child(3) { transform: rotate(-45deg) translate(3px, -5px); }
+
+    /* ─── MOBILE MENU ─── */
+    #mobile-menu {
+      position: fixed; inset: 0;
+      background: rgba(245, 237, 227, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 499;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.25rem;
+      transform: translateX(100%);
+      transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #mobile-menu.open { transform: translateX(0); }
+    .mobile-nav-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(28,20,16,0.6);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .mobile-nav-link:hover { color: #c9a227; }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.will-animate { opacity: 0; transform: translateY(24px); }
+    .reveal.will-animate.in { opacity: 1; transform: translateY(0); }
+    .reveal.d1 { transition-delay: 0.08s; }
+    .reveal.d2 { transition-delay: 0.16s; }
+    .reveal.d3 { transition-delay: 0.24s; }
+    .reveal.d4 { transition-delay: 0.32s; }
+    .reveal.d5 { transition-delay: 0.40s; }
+
+    /* ─── MISC ─── */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #f5ede3; }
+    ::-webkit-scrollbar-thumb { background: rgba(201,162,39,0.3); border-radius: 2px; }
+
+    .section-overline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.64rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #c9a227;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════
+     NAV
+═══════════════════════ -->
+<nav id="navbar">
+  <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;">
+    <a href="#home" style="text-decoration:none;">
+      <div class="font-brand gold-text" style="font-size:1.1rem;letter-spacing:0.16em;">The Nails Castle</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(28,20,16,0.38);margin-top:2px;">Beauty Studio · GTA</div>
+    </a>
+
+    <div class="hidden md:flex items-center" style="gap:2.25rem;">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#gallery" class="nav-link">Gallery</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#reviews" class="nav-link">Reviews</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="tel:4379967700" class="btn-gold" style="padding:0.6rem 1.35rem;font-size:0.64rem;">Call to Book</a>
+    </div>
+
+    <button id="hamburger" class="md:hidden flex flex-col justify-center" style="gap:6px;background:none;border:none;cursor:pointer;padding:4px;" aria-label="Menu">
+      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+    </button>
+  </div>
+</nav>
+
+<div id="mobile-menu">
+  <div class="font-brand gold-text" style="font-size:1.2rem;letter-spacing:0.16em;margin-bottom:0.5rem;">The Nails Castle</div>
+  <a href="#services" class="mobile-nav-link" onclick="closeMenu()">Services</a>
+  <a href="#gallery" class="mobile-nav-link" onclick="closeMenu()">Gallery</a>
+  <a href="#about" class="mobile-nav-link" onclick="closeMenu()">About</a>
+  <a href="#reviews" class="mobile-nav-link" onclick="closeMenu()">Reviews</a>
+  <a href="#contact" class="mobile-nav-link" onclick="closeMenu()">Contact</a>
+  <a href="tel:4379967700" class="btn-gold" onclick="closeMenu()" style="padding:0.85rem 2rem;margin-top:0.5rem;">437-996-7700</a>
+</div>
+
+
+<!-- ═══════════════════════
+     HERO
+═══════════════════════ -->
+<section id="home" class="hero-bg" style="min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:8rem 1.5rem 6rem;">
+
+  <!-- Decorative gold watermark -->
+  <div style="position:absolute;right:-1rem;bottom:-1rem;font-family:'Cinzel',serif;font-size:clamp(10rem,24vw,20rem);font-weight:600;color:rgba(201,162,39,0.055);line-height:1;pointer-events:none;user-select:none;white-space:nowrap;">Castle</div>
+
+  <div style="max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+
+    <!-- Ornament -->
+    <div class="reveal ornament" style="margin-bottom:1.25rem;">
+      <div class="ornament-diamond"></div>
+      <span class="section-overline">Beauty Studio — Greater Toronto Area</span>
+      <div class="ornament-diamond"></div>
+    </div>
+
+    <h1 class="reveal d1 font-brand" style="font-size:clamp(2.8rem,8vw,6.5rem);font-weight:400;line-height:1.08;letter-spacing:0.08em;color:#1c1410;margin-bottom:0.75rem;">
+      THE NAILS<br>
+      <span class="gold-text">CASTLE</span>
+    </h1>
+
+    <div class="reveal d2" style="margin:1.5rem auto;">
+      <div class="ornament" style="max-width:320px;margin:0 auto;">
+        <div class="ornament-diamond"></div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;font-style:italic;letter-spacing:0.16em;color:rgba(28,20,16,0.5);">GTA's Premier Beauty Studio</span>
+        <div class="ornament-diamond"></div>
+      </div>
+    </div>
+
+    <p class="reveal d3 font-heading" style="font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:300;font-style:italic;line-height:1.7;color:rgba(28,20,16,0.58);max-width:520px;margin:1.5rem auto 2.75rem;">
+      Nails · Waxing · Threading · Facials &amp; More
+    </p>
+
+    <div class="reveal d4" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="tel:4379967700" class="btn-gold" style="padding:1rem 2.75rem;font-size:0.72rem;letter-spacing:0.2em;">437-996-7700</a>
+      <a href="#services" class="btn-gold-outline" style="padding:1rem 2.5rem;"><span>View Services</span></a>
+    </div>
+  </div>
+
+  <div class="reveal d5" style="position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;">
+    <div style="width:1px;height:36px;background:linear-gradient(to bottom,rgba(201,162,39,0.5),transparent);"></div>
+    <span style="font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(28,20,16,0.28);">Scroll</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     STATS STRIP
+═══════════════════════ -->
+<div style="background:#1c1410;padding:1.75rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:0;divide-x:1px;">
+    <div style="flex:1;min-width:140px;text-align:center;padding:1rem 1.5rem;border-right:1px solid rgba(201,162,39,0.15);">
+      <div class="font-brand gold-text" style="font-size:1.8rem;font-weight:400;letter-spacing:0.06em;">5.0</div>
+      <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,237,227,0.4);margin-top:0.3rem;font-family:'DM Sans',sans-serif;">Google Rating</div>
+    </div>
+    <div style="flex:1;min-width:140px;text-align:center;padding:1rem 1.5rem;border-right:1px solid rgba(201,162,39,0.15);">
+      <div class="font-brand gold-text" style="font-size:1.8rem;font-weight:400;letter-spacing:0.06em;">4+</div>
+      <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,237,227,0.4);margin-top:0.3rem;font-family:'DM Sans',sans-serif;">Services Offered</div>
+    </div>
+    <div style="flex:1;min-width:140px;text-align:center;padding:1rem 1.5rem;border-right:1px solid rgba(201,162,39,0.15);">
+      <div class="font-brand gold-text" style="font-size:1.8rem;font-weight:400;letter-spacing:0.06em;">GTA</div>
+      <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,237,227,0.4);margin-top:0.3rem;font-family:'DM Sans',sans-serif;">Greater Toronto Area</div>
+    </div>
+    <div style="flex:1;min-width:140px;text-align:center;padding:1rem 1.5rem;">
+      <div class="font-brand gold-text" style="font-size:1.8rem;font-weight:400;letter-spacing:0.06em;">437</div>
+      <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,237,227,0.4);margin-top:0.3rem;font-family:'DM Sans',sans-serif;">996-7700</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════
+     SERVICES
+═══════════════════════ -->
+<section id="services" style="background:#ece0d4;padding:5rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div class="reveal" style="text-align:center;margin-bottom:3rem;">
+      <span class="section-overline">What We Offer</span>
+      <h2 class="font-brand" style="font-size:clamp(2rem,4vw,3rem);font-weight:400;letter-spacing:0.12em;color:#1c1410;margin-top:0.75rem;margin-bottom:1.5rem;">RATE LIST</h2>
+      <div class="line-gold-center"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem;">
+
+      <!-- NAILS -->
+      <div class="service-category reveal d1">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+          <span style="font-size:1.2rem;">💅</span>
+          <h3 class="font-brand" style="font-size:0.95rem;letter-spacing:0.18em;color:#1c1410;">NAILS</h3>
+        </div>
+        <div class="service-row"><span class="service-name">Biogel Nails</span><span class="service-price">$40</span></div>
+        <div class="service-row"><span class="service-name">Biogel Refills</span><span class="service-price">$35</span></div>
+        <div class="service-row"><span class="service-name">Biogel Extensions</span><span class="service-price">$40+</span></div>
+        <div class="service-row"><span class="service-name">Acrylic Nails</span><span class="service-price">$45</span></div>
+        <div class="service-row"><span class="service-name">Manicure — Regular / Shellac</span><span class="service-price">$20 / $25</span></div>
+        <div class="service-row"><span class="service-name">Pedicure — Regular / Shellac</span><span class="service-price">$35 / $40</span></div>
+      </div>
+
+      <!-- WAXING -->
+      <div class="service-category reveal d2">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+          <span style="font-size:1.2rem;">✨</span>
+          <h3 class="font-brand" style="font-size:0.95rem;letter-spacing:0.18em;color:#1c1410;">WAXING</h3>
+        </div>
+        <div class="service-row"><span class="service-name">Full Body Waxing</span><span class="service-price">$80+</span></div>
+        <div class="service-row"><span class="service-name">Arms / Legs Wax</span><span class="service-price">$15 / $25</span></div>
+        <div class="service-row"><span class="service-name">Underarms Wax</span><span class="service-price">$6</span></div>
+        <div class="service-row"><span class="service-name">Brazilian Wax</span><span class="service-price">$30 / $50</span></div>
+        <div class="service-row"><span class="service-name">Face Wax</span><span class="service-price">$20 / $30</span></div>
+      </div>
+
+      <!-- BROW & LASH -->
+      <div class="service-category reveal d3">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+          <span style="font-size:1.2rem;">👁</span>
+          <h3 class="font-brand" style="font-size:0.95rem;letter-spacing:0.18em;color:#1c1410;">BROW &amp; LASH</h3>
+        </div>
+        <div class="service-row"><span class="service-name">Eyebrow Threading</span><span class="service-price">$5</span></div>
+        <div class="service-row"><span class="service-name">Eyebrow Tint</span><span class="service-price">$10</span></div>
+        <div class="service-row"><span class="service-name">Lash Tint</span><span class="service-price">$12</span></div>
+        <div class="service-row"><span class="service-name">Henna</span><span class="service-price">$5+</span></div>
+      </div>
+
+      <!-- SKIN & WELLNESS -->
+      <div class="service-category reveal d1">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+          <span style="font-size:1.2rem;">🌸</span>
+          <h3 class="font-brand" style="font-size:0.95rem;letter-spacing:0.18em;color:#1c1410;">SKIN &amp; WELLNESS</h3>
+        </div>
+        <div class="service-row"><span class="service-name">Glow Massage Facials</span><span class="service-price">$45</span></div>
+        <div class="service-row"><span class="service-name">Hot Oil Head Massage</span><span class="service-price">$25</span></div>
+        <div class="service-row"><span class="service-name">Face Bleach</span><span class="service-price">$10</span></div>
+        <div class="service-row"><span class="service-name">Full Body Bleach</span><span class="service-price">$80</span></div>
+      </div>
+
+    </div>
+
+    <!-- CTA banner -->
+    <div class="reveal" style="margin-top:3rem;text-align:center;padding:2.5rem;border:1px solid rgba(201,162,39,0.3);background:rgba(201,162,39,0.04);">
+      <div class="ornament" style="margin-bottom:1.25rem;max-width:400px;margin-left:auto;margin-right:auto;">
+        <div class="ornament-diamond"></div>
+        <span class="font-brand" style="font-size:0.85rem;letter-spacing:0.2em;color:#1c1410;">CALL FOR APPOINTMENTS</span>
+        <div class="ornament-diamond"></div>
+      </div>
+      <a href="tel:4379967700" class="btn-gold" style="padding:0.9rem 2.5rem;font-size:0.75rem;letter-spacing:0.18em;">437-996-7700</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     GALLERY
+═══════════════════════ -->
+<section id="gallery" style="background:#1a1410;padding:5rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:2.5rem;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:1.5rem;">
+        <div>
+          <span style="font-family:'DM Sans',sans-serif;font-size:0.64rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(201,162,39,0.65);font-weight:400;">Our Work</span>
+          <h2 class="font-brand" style="font-size:clamp(2rem,4vw,3rem);font-weight:400;letter-spacing:0.12em;color:#f5ede3;margin-top:0.6rem;">THE GALLERY</h2>
+        </div>
+        <span class="font-heading" style="font-size:1rem;font-style:italic;color:rgba(245,237,227,0.3);margin-bottom:0.2rem;">Flawless. Every time.</span>
+      </div>
+      <div style="width:100%;height:1px;background:rgba(201,162,39,0.18);"></div>
+    </div>
+
+    <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;">
+
+      <div class="gallery-item reveal d1">
+        <img src="brand_assets/2024-03-13.webp" alt="Glitter ombre nails" loading="lazy">
+        <div class="gallery-label">
+          <span>Biogel</span>
+          <strong>Glitter Ombré</strong>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal d2">
+        <img src="brand_assets/2023-04-17.webp" alt="Dark green and gold nail art" loading="lazy">
+        <div class="gallery-label">
+          <span>Nail Art</span>
+          <strong>Green & Gold</strong>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal d3">
+        <img src="brand_assets/2026-01-10.webp" alt="Deep red nails with gold leaf" loading="lazy">
+        <div class="gallery-label">
+          <span>Nail Art</span>
+          <strong>Red & Gold Leaf</strong>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal d4">
+        <img src="brand_assets/2025-07-23.webp" alt="White nails with tulip art" loading="lazy">
+        <div class="gallery-label">
+          <span>Biogel</span>
+          <strong>White Tulips</strong>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal d1">
+        <img src="brand_assets/2025-07-23%20(1).webp" alt="Pink nails with floral design" loading="lazy">
+        <div class="gallery-label">
+          <span>Acrylic</span>
+          <strong>Pink Floral</strong>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal d2">
+        <img src="brand_assets/unnamed.jpg" alt="Henna mehndi design" loading="lazy">
+        <div class="gallery-label">
+          <span>Beauty</span>
+          <strong>Henna Art</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     ABOUT
+═══════════════════════ -->
+<section id="about" style="background:#ece0d4;padding:5rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div id="about-grid" style="display:grid;grid-template-columns:1fr;gap:3.5rem;align-items:center;">
+
+      <!-- At a Glance — open typographic panel, no background -->
+      <div class="reveal" style="max-width:460px;width:100%;margin:0 auto;order:2;padding:0 0.5rem;">
+
+        <!-- Top rule + label -->
+        <div style="display:flex;align-items:center;gap:0.85rem;margin-bottom:2.25rem;">
+          <div style="width:36px;height:1px;background:#c9a227;flex-shrink:0;"></div>
+          <span style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#c9a227;">At a Glance</span>
+          <div style="flex:1;height:1px;background:rgba(201,162,39,0.2);"></div>
+        </div>
+
+        <!-- 2×2 stat grid — open, no box -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:2rem;">
+
+          <div style="padding:1.25rem 1rem 1.25rem 0;border-bottom:1px solid rgba(201,162,39,0.2);border-right:1px solid rgba(201,162,39,0.2);">
+            <div class="font-brand gold-text" style="font-size:2.75rem;font-weight:400;letter-spacing:0.04em;line-height:1;">5.0</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(28,20,16,0.4);margin-top:0.4rem;">Google Rating</div>
+          </div>
+
+          <div style="padding:1.25rem 0 1.25rem 1.25rem;border-bottom:1px solid rgba(201,162,39,0.2);">
+            <div class="font-brand gold-text" style="font-size:2.75rem;font-weight:400;letter-spacing:0.04em;line-height:1;">15+</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(28,20,16,0.4);margin-top:0.4rem;">Services Offered</div>
+          </div>
+
+          <div style="padding:1.25rem 1rem 0 0;border-right:1px solid rgba(201,162,39,0.2);">
+            <div class="font-brand gold-text" style="font-size:2.75rem;font-weight:400;letter-spacing:0.04em;line-height:1;">★★★★★</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(28,20,16,0.4);margin-top:0.4rem;">5-Star Reviewed</div>
+          </div>
+
+          <div style="padding:1.25rem 0 0 1.25rem;">
+            <div class="font-brand gold-text" style="font-size:2.75rem;font-weight:400;letter-spacing:0.04em;line-height:1;">GTA</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(28,20,16,0.4);margin-top:0.4rem;">Greater Toronto Area</div>
+          </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div style="width:100%;height:1px;background:rgba(201,162,39,0.2);margin-bottom:1.75rem;"></div>
+
+        <!-- Services list in 2 columns -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem 1rem;margin-bottom:2rem;">
+          <div style="display:flex;align-items:center;gap:0.55rem;">
+            <div style="width:3px;height:3px;background:#c9a227;transform:rotate(45deg);flex-shrink:0;"></div>
+            <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:rgba(28,20,16,0.55);">Nails &amp; Art</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.55rem;">
+            <div style="width:3px;height:3px;background:#c9a227;transform:rotate(45deg);flex-shrink:0;"></div>
+            <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:rgba(28,20,16,0.55);">Waxing</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.55rem;">
+            <div style="width:3px;height:3px;background:#c9a227;transform:rotate(45deg);flex-shrink:0;"></div>
+            <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:rgba(28,20,16,0.55);">Threading &amp; Tinting</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.55rem;">
+            <div style="width:3px;height:3px;background:#c9a227;transform:rotate(45deg);flex-shrink:0;"></div>
+            <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:rgba(28,20,16,0.55);">Glow Facials</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.55rem;">
+            <div style="width:3px;height:3px;background:#c9a227;transform:rotate(45deg);flex-shrink:0;"></div>
+            <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:rgba(28,20,16,0.55);">Henna</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.55rem;">
+            <div style="width:3px;height:3px;background:#c9a227;transform:rotate(45deg);flex-shrink:0;"></div>
+            <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:rgba(28,20,16,0.55);">Walk-ins Welcome</span>
+          </div>
+        </div>
+
+        <!-- Call CTA — inline, no box -->
+        <div style="display:flex;align-items:center;gap:0.85rem;">
+          <div style="width:36px;height:1px;background:#c9a227;flex-shrink:0;"></div>
+          <a href="tel:4379967700" class="font-brand" style="font-size:1.05rem;font-weight:400;letter-spacing:0.12em;color:#c9a227;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#9a7820'" onmouseout="this.style.color='#c9a227'">437-996-7700</a>
+        </div>
+
+      </div>
+
+      <!-- Text -->
+      <div class="reveal d2" style="order:1;">
+        <span class="section-overline">Meet Your Artist</span>
+        <h2 class="font-brand" style="font-size:clamp(2rem,4vw,3rem);font-weight:400;letter-spacing:0.12em;color:#1c1410;margin-top:0.75rem;margin-bottom:1.5rem;">THE CASTLE STUDIO</h2>
+        <div class="line-gold-left" style="margin-bottom:2rem;"></div>
+        <p style="font-size:0.96rem;line-height:1.95;color:rgba(28,20,16,0.62);margin-bottom:1.4rem;">
+          Welcome to The Nails Castle — where every client is treated like royalty. Our studio is built on a love of precision, creativity, and making you feel your absolute best from the moment you walk in.
+        </p>
+        <p style="font-size:0.96rem;line-height:1.95;color:rgba(28,20,16,0.62);margin-bottom:1.4rem;">
+          From flawless biogel sets and creative nail art to waxing, threading, and relaxing facials — this is your one-stop beauty destination in the GTA. We take the time to understand exactly what you want and deliver results that speak for themselves.
+        </p>
+        <p style="font-size:0.96rem;line-height:1.95;color:rgba(28,20,16,0.62);margin-bottom:2.75rem;">
+          Whether it's your wedding day, a birthday, or just because — you deserve to be pampered. Walk-ins welcome, appointments preferred. Call us to reserve your spot.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:1.75rem;margin-bottom:2.75rem;">
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:4px;height:4px;border-radius:50%;background:#c9a227;"></div>
+            <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Full-Service Studio</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:4px;height:4px;border-radius:50%;background:#c9a227;"></div>
+            <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">5-Star Rated</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:4px;height:4px;border-radius:50%;background:#c9a227;"></div>
+            <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Greater Toronto Area</span>
+          </div>
+        </div>
+        <a href="tel:4379967700" class="btn-gold-outline" style="padding:0.9rem 2.25rem;"><span>Call to Book</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     REVIEWS
+═══════════════════════ -->
+<section id="reviews" style="background:#f5ede3;padding:5rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div class="reveal" style="text-align:center;margin-bottom:3rem;">
+      <span class="section-overline">Client Love</span>
+      <h2 class="font-brand" style="font-size:clamp(2rem,4vw,3rem);font-weight:400;letter-spacing:0.12em;color:#1c1410;margin-top:0.75rem;margin-bottom:1.5rem;">WHAT THEY SAY</h2>
+      <div class="line-gold-center"></div>
+    </div>
+
+    <!-- Row 1 -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-bottom:1.25rem;">
+
+      <div class="review-card reveal d1">
+        <div class="stars" style="margin-bottom:1rem;">★★★★★</div>
+        <p class="font-heading" style="font-size:1.08rem;font-style:italic;font-weight:300;line-height:1.78;color:rgba(28,20,16,0.72);margin-bottom:1.4rem;">
+          "She's a total nail wizard — flawless shape, dreamy designs, and vibes for days. My nail game is forever strong. 10/10!"
+        </p>
+        <div style="width:28px;height:1px;background:rgba(201,162,39,0.4);margin-bottom:0.8rem;"></div>
+        <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Sirat M.</span>
+      </div>
+
+      <div class="review-card reveal d2">
+        <div class="stars" style="margin-bottom:1rem;">★★★★★</div>
+        <p class="font-heading" style="font-size:1.08rem;font-style:italic;font-weight:300;line-height:1.78;color:rgba(28,20,16,0.72);margin-bottom:1.4rem;">
+          "From the moment I walked in, I was impressed by the calm, inviting atmosphere. She was warm, welcoming, and took the time to understand exactly what I wanted."
+        </p>
+        <div style="width:28px;height:1px;background:rgba(201,162,39,0.4);margin-bottom:0.8rem;"></div>
+        <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Rythm A.</span>
+      </div>
+
+      <div class="review-card reveal d3">
+        <div class="stars" style="margin-bottom:1rem;">★★★★★</div>
+        <p class="font-heading" style="font-size:1.08rem;font-style:italic;font-weight:300;line-height:1.78;color:rgba(28,20,16,0.72);margin-bottom:1.4rem;">
+          "The quality of products is top-notch, the work is neat and precise, and my nails last way longer than anywhere else I've been. Simply the best!"
+        </p>
+        <div style="width:28px;height:1px;background:rgba(201,162,39,0.4);margin-bottom:0.8rem;"></div>
+        <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Jessica K.</span>
+      </div>
+
+    </div>
+
+    <!-- Row 2 -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;">
+
+      <div class="review-card reveal d1">
+        <div class="stars" style="margin-bottom:1rem;">★★★★★</div>
+        <p class="font-heading" style="font-size:1.08rem;font-style:italic;font-weight:300;line-height:1.78;color:rgba(28,20,16,0.72);margin-bottom:1.4rem;">
+          "I got my nails done for my wedding day and got so many compliments. So professional with amazing nail designs and ideas. Keep up the incredible work!"
+        </p>
+        <div style="width:28px;height:1px;background:rgba(201,162,39,0.4);margin-bottom:0.8rem;"></div>
+        <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Reena S.</span>
+      </div>
+
+      <div class="review-card reveal d2">
+        <div class="stars" style="margin-bottom:1rem;">★★★★★</div>
+        <p class="font-heading" style="font-size:1.08rem;font-style:italic;font-weight:300;line-height:1.78;color:rgba(28,20,16,0.72);margin-bottom:1.4rem;">
+          "I'm a regular here and it's my go-to place for nails and brows. I love that I can get everything done in one visit and they're always so sweet. I always leave happy!"
+        </p>
+        <div style="width:28px;height:1px;background:rgba(201,162,39,0.4);margin-bottom:0.8rem;"></div>
+        <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Miss Mala</span>
+      </div>
+
+      <div class="review-card reveal d3">
+        <div class="stars" style="margin-bottom:1rem;">★★★★★</div>
+        <p class="font-heading" style="font-size:1.08rem;font-style:italic;font-weight:300;line-height:1.78;color:rgba(28,20,16,0.72);margin-bottom:1.4rem;">
+          "Professional, creative, and made my nails look stunning. Great service and a relaxing atmosphere — definitely coming back!"
+        </p>
+        <div style="width:28px;height:1px;background:rgba(201,162,39,0.4);margin-bottom:0.8rem;"></div>
+        <span style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:#c9a227;">Yati R.</span>
+      </div>
+
+    </div>
+
+    <!-- Rating bar -->
+    <div class="reveal" style="margin-top:3rem;text-align:center;">
+      <div class="ornament" style="max-width:360px;margin:0 auto 1rem;">
+        <div class="ornament-diamond"></div>
+        <span style="font-size:2.5rem;color:#c9a227;letter-spacing:4px;">★★★★★</span>
+        <div class="ornament-diamond"></div>
+      </div>
+      <p style="font-size:0.8rem;letter-spacing:0.1em;color:rgba(28,20,16,0.45);text-transform:uppercase;">5.0 · Google Reviews</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     BOOKING CTA
+═══════════════════════ -->
+<section id="booking" style="background:#1c1410;padding:5.5rem 1.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;bottom:-2rem;right:-1rem;font-family:'Cinzel',serif;font-size:clamp(10rem,24vw,20rem);font-weight:600;color:rgba(201,162,39,0.045);line-height:1;pointer-events:none;user-select:none;white-space:nowrap;">Castle</div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(201,162,39,0.1) 0%,transparent 65%);pointer-events:none;"></div>
+
+  <div style="max-width:680px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+    <div class="reveal ornament" style="margin-bottom:1.75rem;max-width:360px;margin-left:auto;margin-right:auto;">
+      <div class="ornament-diamond" style="background:#c9a227;"></div>
+      <span style="font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(201,162,39,0.6);font-family:'DM Sans',sans-serif;">Call to Book</span>
+      <div class="ornament-diamond" style="background:#c9a227;"></div>
+    </div>
+    <h2 class="font-brand reveal d1" style="font-size:clamp(2.5rem,6vw,5rem);font-weight:400;letter-spacing:0.1em;line-height:1.12;color:#f5ede3;margin-bottom:1rem;">
+      BOOK YOUR <span class="gold-text">THRONE</span>
+    </h2>
+    <p class="font-heading reveal d2" style="font-size:1.1rem;font-style:italic;font-weight:300;color:rgba(245,237,227,0.45);margin-bottom:3rem;line-height:1.8;">
+      Every client deserves to feel like royalty.
+    </p>
+    <div class="reveal d3" style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
+      <a href="tel:4379967700" class="btn-gold" style="padding:1.1rem 3.5rem;font-size:1rem;letter-spacing:0.22em;font-family:'DM Sans',sans-serif;">437-996-7700</a>
+      <span style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,237,227,0.25);font-family:'DM Sans',sans-serif;">Tap to Call</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     CONTACT
+═══════════════════════ -->
+<section id="contact" style="background:#ece0d4;padding:5rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div class="reveal" style="text-align:center;margin-bottom:3rem;">
+      <span class="section-overline">Get In Touch</span>
+      <h2 class="font-brand" style="font-size:clamp(2rem,4vw,3rem);font-weight:400;letter-spacing:0.12em;color:#1c1410;margin-top:0.75rem;margin-bottom:1.5rem;">CONTACT</h2>
+      <div class="line-gold-center"></div>
+    </div>
+
+    <div id="contact-grid" style="display:grid;grid-template-columns:1fr;gap:4.5rem;">
+
+      <div class="reveal d1" style="display:flex;flex-direction:column;gap:2.5rem;">
+        <div>
+          <div class="section-overline" style="margin-bottom:0.5rem;">Phone</div>
+          <a href="tel:4379967700" class="font-heading" style="font-size:1.8rem;font-weight:300;color:#1c1410;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#c9a227'" onmouseout="this.style.color='#1c1410'">437-996-7700</a>
+        </div>
+        <div>
+          <div class="section-overline" style="margin-bottom:0.5rem;">Location</div>
+          <span class="font-heading" style="font-size:1.8rem;font-weight:300;color:rgba(28,20,16,0.6);">Greater Toronto Area</span>
+        </div>
+        <div>
+          <div class="section-overline" style="margin-bottom:0.75rem;">Book Your Appointment</div>
+          <p style="font-size:0.88rem;line-height:1.8;color:rgba(28,20,16,0.55);max-width:380px;">Call us directly to book your appointment. Walk-ins welcome based on availability.</p>
+          <a href="tel:4379967700" class="btn-gold" style="display:inline-block;margin-top:1.5rem;padding:0.9rem 2.25rem;font-size:0.7rem;letter-spacing:0.18em;">Call Now</a>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <div style="background:#faf4ea;border:1px solid rgba(201,162,39,0.2);padding:2.5rem;" class="font-heading" style="font-size:1rem;">
+          <h3 class="font-brand" style="font-size:1rem;letter-spacing:0.18em;color:#1c1410;margin-bottom:1.5rem;">SEND A MESSAGE</h3>
+          <form id="contact-form" onsubmit="submitForm(event)" style="display:flex;flex-direction:column;gap:1rem;">
+            <div>
+              <label style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(28,20,16,0.38);display:block;margin-bottom:0.45rem;font-family:'DM Sans',sans-serif;">Your Name</label>
+              <input type="text" class="form-field" placeholder="Full name" required>
+            </div>
+            <div>
+              <label style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(28,20,16,0.38);display:block;margin-bottom:0.45rem;font-family:'DM Sans',sans-serif;">Phone Number</label>
+              <input type="tel" class="form-field" placeholder="Your phone number" required>
+            </div>
+            <div>
+              <label style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(28,20,16,0.38);display:block;margin-bottom:0.45rem;font-family:'DM Sans',sans-serif;">Service Interested In</label>
+              <select class="form-field" required style="cursor:pointer;appearance:none;-webkit-appearance:none;">
+                <option value="" disabled selected>Select a service</option>
+                <option>Biogel Nails — $40</option>
+                <option>Biogel Refills — $35</option>
+                <option>Acrylic Nails — $45</option>
+                <option>Manicure / Pedicure</option>
+                <option>Waxing</option>
+                <option>Eyebrow Threading — $5</option>
+                <option>Glow Facial — $45</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(28,20,16,0.38);display:block;margin-bottom:0.45rem;font-family:'DM Sans',sans-serif;">Message (optional)</label>
+              <textarea class="form-field" rows="4" placeholder="Any questions or requests..." style="resize:none;"></textarea>
+            </div>
+            <button type="submit" class="btn-gold" id="submit-btn" style="width:100%;padding:0.95rem;font-size:0.7rem;letter-spacing:0.18em;text-align:center;">
+              <span id="submit-label">Send Message</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     FOOTER
+═══════════════════════ -->
+<footer style="background:#1c1410;padding:3.5rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.75rem;">
+
+    <div>
+      <div class="font-brand gold-text" style="font-size:1.3rem;letter-spacing:0.18em;">THE NAILS CASTLE</div>
+      <p class="font-heading" style="font-size:0.9rem;font-style:italic;font-weight:300;color:rgba(245,237,227,0.3);margin-top:0.4rem;letter-spacing:0.06em;">Where Every Client is Royalty</p>
+    </div>
+
+    <div style="width:48px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,0.45),transparent);"></div>
+
+    <div>
+      <a href="tel:4379967700" style="font-family:'DM Sans',sans-serif;font-size:0.85rem;letter-spacing:0.1em;color:rgba(245,237,227,0.45);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#c9a227'" onmouseout="this.style.color='rgba(245,237,227,0.45)'">437-996-7700</a>
+    </div>
+
+    <p style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,237,227,0.18);font-family:'DM Sans',sans-serif;">
+      © 2026 The Nails Castle. All rights reserved. · Greater Toronto Area
+    </p>
+  </div>
+</footer>
+
+
+<script>
+  /* Screenshot preview mode */
+  (function() {
+    const show = new URLSearchParams(location.search).get('show');
+    if (!show) return;
+    document.querySelectorAll('section, footer').forEach(el => {
+      if (el.id !== show) el.style.display = 'none';
+    });
+    document.getElementById('navbar').style.display = 'none';
+    document.getElementById('mobile-menu').style.display = 'none';
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  })();
+
+  /* Nav scroll */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* Mobile menu */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* About two-col on lg */
+  function applyAboutLayout() {
+    const grid = document.getElementById('about-grid');
+    if (!grid) return;
+    if (window.innerWidth >= 1024) {
+      grid.style.gridTemplateColumns = '1fr 1fr';
+      grid.children[0].style.order = '2';
+      grid.children[1].style.order = '1';
+    } else {
+      grid.style.gridTemplateColumns = '1fr';
+      grid.children[0].style.order = '2';
+      grid.children[1].style.order = '1';
+    }
+  }
+  applyAboutLayout();
+  window.addEventListener('resize', applyAboutLayout);
+
+  /* Contact two-col on lg */
+  function applyContactLayout() {
+    const grid = document.getElementById('contact-grid');
+    if (grid) grid.style.gridTemplateColumns = window.innerWidth >= 1024 ? '1fr 1fr' : '1fr';
+  }
+  applyContactLayout();
+  window.addEventListener('resize', applyContactLayout);
+
+  /* Gallery 3-col on md */
+  function applyGalleryLayout() {
+    const grid = document.getElementById('gallery-grid');
+    if (grid) grid.style.gridTemplateColumns = window.innerWidth >= 768 ? 'repeat(3,1fr)' : 'repeat(2,1fr)';
+  }
+  applyGalleryLayout();
+  window.addEventListener('resize', applyGalleryLayout);
+
+  /* Scroll reveal */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.remove('will-animate');
+        e.target.classList.add('in');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+      /* already visible */
+    } else {
+      el.classList.add('will-animate');
+      observer.observe(el);
+    }
+  });
+
+  /* Form */
+  function submitForm(e) {
+    e.preventDefault();
+    const label = document.getElementById('submit-label');
+    label.textContent = 'Sent ✓';
+    setTimeout(() => { label.textContent = 'Send Message'; }, 3500);
+  }
+</script>
+</body>
+</html>
