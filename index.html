@@ -396,16 +396,101 @@
     .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s}
 
     /* ── RESPONSIVE ── */
+    /* ── Tailwind critical fallbacks ── */
+    html { overflow-x: hidden; }
+    .hidden { display: none !important; }
+    @media (min-width: 768px) {
+      .md\:flex   { display: flex !important; }
+      .md\:hidden { display: none !important; }
+    }
+
+    /* ══ TABLET ≤ 900px ══ */
     @media (max-width: 900px) {
-      .hero-wordmark { font-size: clamp(2.8rem, 12vw, 5.5rem); }
+      .hero-wordmark { font-size: clamp(2.8rem, 11vw, 5rem); letter-spacing: .08em; }
+      .hero-content { padding: 8rem 1.5rem 5rem !important; }
       .services-grid { grid-template-columns: 1fr; }
       #about-castle-inner { grid-template-columns: 1fr !important; gap: 3rem !important; }
       .about-features-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-scroll-item { height: 300px; }
-      .gi-w1 { width: 220px; }
-      .gi-w2 { width: 260px; }
-      .gi-w3 { width: 240px; }
-      .gi-w4 { width: 200px; }
+      .gallery-scroll-item { height: 280px; }
+      .gi-w1 { width: 200px; }
+      .gi-w2 { width: 240px; }
+      .gi-w3 { width: 220px; }
+      .gi-w4 { width: 185px; }
+    }
+
+    /* ══ MOBILE ≤ 768px ══ */
+    @media (max-width: 768px) {
+      /* Hero: wordmark fits viewport, clear nav */
+      .hero-content { padding: 5.5rem 1.25rem 4rem !important; }
+      .hero-wordmark { font-size: clamp(1.9rem, 8vw, 2.8rem) !important; letter-spacing: .04em !important; line-height: 1.12 !important; }
+      /* Tagline: allow wrap */
+      .hero-tagline {
+        font-size: .68rem !important; letter-spacing: .08em !important;
+        margin-bottom: 2rem !important; white-space: normal !important;
+        word-break: normal; overflow-wrap: anywhere;
+        max-width: 86vw; margin-left: auto; margin-right: auto;
+      }
+      /* Ornament: hide extending lines on mobile, just show text */
+      .orn::before, .orn::after { display: none !important; }
+      .orn { justify-content: center; flex-wrap: wrap; gap: .4rem; }
+      .hero-eyebrow { font-size: .54rem !important; letter-spacing: .1em !important; text-align: center; }
+
+      /* Hero buttons: stacked full-width */
+      .hero-btns { flex-direction: column; align-items: center; gap: .75rem; }
+      .hero-btns a { width: min(320px, 88vw); justify-content: center; min-height: 52px; }
+
+      /* Gallery horizontal scroll */
+      #gallery { padding: 3.5rem 0 !important; }
+      .gallery-header { padding: 0 1.25rem !important; margin-bottom: 1.5rem !important; }
+      .gallery-scroll-wrap { padding: 0 1.25rem !important; }
+      .gallery-scroll-item { height: 240px !important; }
+      .gi-w1 { width: 170px !important; }
+      .gi-w2 { width: 200px !important; }
+      .gi-w3 { width: 185px !important; }
+      .gi-w4 { width: 155px !important; }
+
+      /* Services */
+      #services { padding: 4rem 1.25rem !important; }
+      .svc-cat { padding: 2rem 1.5rem !important; }
+      .svc-name { font-size: .82rem !important; }
+      .svc-price { font-size: .92rem !important; }
+
+      /* About */
+      #about > div { padding: 4rem 1.25rem !important; }
+      .about-features-grid { grid-template-columns: 1fr 1fr !important; }
+      .about-feat { padding: 1.25rem 1rem !important; }
+      .about-feat-val { font-size: 1.75rem !important; }
+      .about-service-list { grid-template-columns: 1fr !important; }
+
+      /* Reviews */
+      #reviews { padding: 4rem 1.25rem !important; }
+
+      /* Booking */
+      #booking { padding: 4rem 1.25rem !important; }
+      #booking a.btn-gold { width: 100%; justify-content: center; min-height: 52px; }
+
+      /* Contact */
+      #contact { padding: 4rem 1.25rem !important; }
+      #contact-grid { gap: 2.5rem !important; }
+      #contact .f-brand[style*="1.55rem"] { font-size: 1.2rem !important; }
+
+      /* Footer */
+      footer { padding: 3rem 1.25rem !important; }
+
+      /* Watermark: reduce size so it doesn't affect layout */
+      [style*="Castle"][style*="clamp(8rem"] { font-size: clamp(5rem, 25vw, 9rem) !important; }
+    }
+
+    /* ══ SMALL MOBILE ≤ 480px ══ */
+    @media (max-width: 480px) {
+      .hero-content { padding-top: 5rem !important; }
+      .hero-wordmark { font-size: 2rem !important; }
+      .gallery-scroll-item { height: 200px !important; }
+      .gi-w1 { width: 145px !important; }
+      .gi-w2 { width: 170px !important; }
+      .gi-w3 { width: 155px !important; }
+      .gi-w4 { width: 130px !important; }
+      .svc-cat { padding: 1.5rem 1.25rem !important; }
     }
   </style>
 </head>
@@ -464,7 +549,7 @@
 
     <!-- Tagline -->
     <p class="hero-tagline reveal d2">
-      Nails &nbsp;·&nbsp; Waxing &nbsp;·&nbsp; Threading &nbsp;·&nbsp; Facials &amp; More
+      Nails · Waxing · Threading · Facials &amp; More
     </p>
 
     <!-- CTAs -->
